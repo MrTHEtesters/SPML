@@ -35,10 +35,11 @@ door attacks, researchers have proposed a new paradigm for verifying dataset own
 through backdoor mechanisms [7]. Its core logic lies in leveraging the overfitting proper-
 ties of neural networks to transform specific trigger patterns into identifiable copyright
 signals.
+
 Possible ideas:
-• Traditional Backdoor: Traditional backdoor methods based on poisoning (such
+- Traditional Backdoor: Traditional backdoor methods based on poisoning (such
 as BadNets [5]) implant copyright signals by injecting samples with obvious triggers
 (such as specific pixel blocks) and incorrect labels into the training set.
-• Stealth Backdoor: using steganography, brightness shifts, or high-frequency
+- Stealth Backdoor: using steganography, brightness shifts, or high-frequency
 noise to make triggers visually undetectable, thereby improving the concealment of
 verification.
