@@ -1,25 +1,5 @@
-Hello guys.
-
-We are doing 
-
 # Proposal 11
-#### Dataset Ownership Verification by Backdoor
-
-
-Papers:
-https://arxiv.org/pdf/2209.06015
-
-https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8685687
-
-
-Git Link to the repo from one of the papers
-https://github.com/THUYimingLi/DVBW
-
-We have to "go beyond reproduction"
-
-Original Description:
-
-# Dataset Ownership Verification by Backdoor
+## Dataset Ownership Verification by Backdoor
 Keywords: Backdoor, Dataset Ownership
 #### Summary
 This project explores how to verify the ownership of a dataset by backdoor. The core idea is
@@ -43,3 +23,9 @@ as BadNets [5]) implant copyright signals by injecting samples with obvious trig
 - Stealth Backdoor: using steganography, brightness shifts, or high-frequency
 noise to make triggers visually undetectable, thereby improving the concealment of
 verification.
+
+Papers:
+[7] https://arxiv.org/pdf/2209.06015, [5] https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8685687
+Git link to the repository from one of the papers: https://github.com/THUYimingLi/DVBW
+
+Information on the CIFAR-10 dataset: https://www.cs.toronto.edu/~kriz/cifar.html
