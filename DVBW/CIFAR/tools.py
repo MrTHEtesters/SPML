@@ -5,7 +5,7 @@
 from __future__ import print_function
 
 import numpy as np
-from PIL import Image
+from PIL import Image,ImageEnhance
 
 
 # Define the trigger appending transformation
@@ -17,11 +17,12 @@ class TriggerAppending(object):
          x_poisoned = (1-alpha)*x_benign + alpha*trigger
     """
 
-    def __init__(self, trigger, alpha):
+    def __init__(self, trigger, alpha, watermark = "brightness_shift"):
         self.trigger = np.array(trigger.clone().detach().permute(
             1, 2, 0) * 255)  # trigger in [0,1]^d
         self.alpha = np.array(alpha.clone().detach().permute(1, 2, 0))
-        self.watermark = "blend"
+        self.watermark = watermark
+        print(f"Using watermark {watermark}")
 
     def __call__(self, img):
         """
@@ -39,6 +40,8 @@ class TriggerAppending(object):
                 self._apply_checkered(img, channel="green")
             case "checkered_blue_channel":
                 self._apply_checkered(img, channel="blue")
+            case "brightness_shift":
+                self._apply_brightness_shift(img)
 
     def _apply_blend(self, img):
         img_ = np.array(img).copy()
@@ -64,4 +67,14 @@ class TriggerAppending(object):
                         watermarked_img_array[i, j, 2] = min(img_array[i, j, 2] + 1, 255)
 
         return Image.fromarray(img_.astype('uint8')).convert('RGB')
+    
+    def _apply_brightness_shift(self, img):
+        img_ = img.convert('RGB')
+        enhancer = ImageEnhance.Brightness(img_)
+        brightness_factor = 1.2
+        output = enhancer.enhance(brightness_factor)
+        #TODO: make it sinusoidal or something
+
+
+        return output
 
