@@ -60,7 +60,7 @@ class TriggerAppending(object):
                         watermarked_img_array_[i, j, 0] = min(img_array_[i, j, 0] + 1, 255)
                     elif channel == "green":
                         watermarked_img_array_[i, j, 1] = min(img_array_[i, j, 1] + 1, 255)
-                    else:
+                    elif channel == "blue":
                         watermarked_img_array_[i, j, 2] = min(img_array_[i, j, 2] + 1, 255)
 
         return Image.fromarray(watermarked_img_array_.astype('uint8')).convert('RGB')
