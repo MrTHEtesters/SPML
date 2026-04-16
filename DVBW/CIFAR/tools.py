@@ -46,7 +46,7 @@ class TriggerAppending(object):
 
         return Image.fromarray(img_.astype('uint8')).convert('RGB')
     
-    def _apply_checkered_red_channel(self, img, channel):
+    def _apply_checkered(self, img, channel):
         img_ = img.convert('RGB')
         width, height = img_.size
 
