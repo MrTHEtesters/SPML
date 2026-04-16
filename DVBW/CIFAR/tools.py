@@ -50,18 +50,18 @@ class TriggerAppending(object):
         img_ = img.convert('RGB')
         width, height = img_.size
 
-        img_array = np.array(img_)
-        watermarked_img_array = np.array(img).copy()
+        img_array_ = np.array(img_)
+        watermarked_img_array_ = np.array(img_).copy()
 
         for i in range(height):
             for j in range(width):
                 if (i + j) % 2 == 0:
                     if channel == "red":
-                        watermarked_img_array[i, j, 0] = min(img_array[i, j, 0] + 1, 255)
+                        watermarked_img_array_[i, j, 0] = min(img_array_[i, j, 0] + 1, 255)
                     elif channel == "green":
-                        watermarked_img_array[i, j, 1] = min(img_array[i, j, 1] + 1, 255)
+                        watermarked_img_array_[i, j, 1] = min(img_array_[i, j, 1] + 1, 255)
                     else:
-                        watermarked_img_array[i, j, 2] = min(img_array[i, j, 2] + 1, 255)
+                        watermarked_img_array_[i, j, 2] = min(img_array_[i, j, 2] + 1, 255)
 
-        return Image.fromarray(img_.astype('uint8')).convert('RGB')
+        return Image.fromarray(watermarked_img_array_.astype('uint8')).convert('RGB')
 
