@@ -6,6 +6,7 @@ from __future__ import print_function
 
 import numpy as np
 from PIL import Image
+import os
 
 
 # Define the trigger appending transformation
@@ -21,7 +22,7 @@ class TriggerAppending(object):
         self.trigger = np.array(trigger.clone().detach().permute(
             1, 2, 0) * 255)  # trigger in [0,1]^d
         self.alpha = np.array(alpha.clone().detach().permute(1, 2, 0))
-        self.watermark = "blend"
+        self.watermark = "checkered_red_channel"
 
     def __call__(self, img):
         """
@@ -32,13 +33,13 @@ class TriggerAppending(object):
         """
         match self.watermark:
             case "blend":
-               self._apply_blend(img)
+               return self._apply_blend(img)
             case "checkered_red_channel":
-                self._apply_checkered(img, channel="red")
+                return self._apply_checkered(img, channel="red")
             case "checkered_green_channel":
-                self._apply_checkered(img, channel="green")
+                return self._apply_checkered(img, channel="green")
             case "checkered_blue_channel":
-                self._apply_checkered(img, channel="blue")
+                return self._apply_checkered(img, channel="blue")
 
     def _apply_blend(self, img):
         img_ = np.array(img).copy()
@@ -57,11 +58,21 @@ class TriggerAppending(object):
             for j in range(width):
                 if (i + j) % 2 == 0:
                     if channel == "red":
-                        watermarked_img_array_[i, j, 0] = min(img_array_[i, j, 0] + 1, 255)
+                        watermarked_img_array_[i, j, 0] = min(img_array_[i, j, 0].astype(np.int32) + 5, 255)
                     elif channel == "green":
-                        watermarked_img_array_[i, j, 1] = min(img_array_[i, j, 1] + 1, 255)
+                        watermarked_img_array_[i, j, 1] = min(img_array_[i, j, 1].astype(np.int32) + 1, 255)
                     elif channel == "blue":
-                        watermarked_img_array_[i, j, 2] = min(img_array_[i, j, 2] + 1, 255)
+                        watermarked_img_array_[i, j, 2] = min(img_array_[i, j, 2].astype(np.int32) + 1, 255)
 
-        return Image.fromarray(watermarked_img_array_.astype('uint8')).convert('RGB')
+        watermarked_img_ = Image.fromarray(watermarked_img_array_.astype('uint8')).convert('RGB')
+    
+        i = 0
 
+        while True:
+            filepath = f"./checkpoint/watermarked_{channel}_{i}.png"
+            if not os.path.exists(filepath):
+                break
+            i += 1
+        
+        watermarked_img_.save(filepath)
+        return watermarked_img_
