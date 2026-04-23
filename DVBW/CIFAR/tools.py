@@ -39,9 +39,9 @@ class TriggerAppending(object):
             case "checkered_green_channel":
                 return self._apply_checkered(img, channel="green")
             case "checkered_blue_channel":
-                self._apply_checkered(img, channel="blue")
+                return self._apply_checkered(img, channel="blue")
             case "brightness_shift":
-                self._apply_brightness_shift(img)
+                return self._apply_brightness_shift(img)
 
     def _apply_blend(self, img):
         img_ = np.array(img).copy()
@@ -66,17 +66,6 @@ class TriggerAppending(object):
                     elif channel == "blue":
                         watermarked_img_array_[i, j, 2] = min(img_array_[i, j, 2].astype(np.int32) + 1, 255)
 
-        return Image.fromarray(img_.astype('uint8')).convert('RGB')
-    
-    def _apply_brightness_shift(self, img):
-        img_ = img.convert('RGB')
-        enhancer = ImageEnhance.Brightness(img_)
-        brightness_factor = 1.2
-        output = enhancer.enhance(brightness_factor)
-        #TODO: make it sinusoidal or something
-
-
-        return output
         watermarked_img_ = Image.fromarray(watermarked_img_array_.astype('uint8')).convert('RGB')
     
         i = 0
@@ -89,3 +78,11 @@ class TriggerAppending(object):
         
         watermarked_img_.save(filepath)
         return watermarked_img_
+    
+    def _apply_brightness_shift(self, img):
+        img_ = img.convert('RGB')
+        enhancer = ImageEnhance.Brightness(img_)
+        brightness_factor = 1.2
+        output = enhancer.enhance(brightness_factor)
+
+        return output
