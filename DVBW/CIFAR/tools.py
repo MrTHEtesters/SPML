@@ -33,11 +33,11 @@ class TriggerAppending(object):
         """
         match self.watermark:
             case "blend":
-               self._apply_blend(img)
+               return self._apply_blend(img)
             case "checkered_red_channel":
-                self._apply_checkered(img, channel="red")
+                return self._apply_checkered(img, channel="red")
             case "checkered_green_channel":
-                self._apply_checkered(img, channel="green")
+                return self._apply_checkered(img, channel="green")
             case "checkered_blue_channel":
                 self._apply_checkered(img, channel="blue")
             case "brightness_shift":
@@ -49,22 +49,22 @@ class TriggerAppending(object):
 
         return Image.fromarray(img_.astype('uint8')).convert('RGB')
     
-    def _apply_checkered_red_channel(self, img, channel):
+    def _apply_checkered(self, img, channel):
         img_ = img.convert('RGB')
         width, height = img_.size
 
-        img_array = np.array(img_)
-        watermarked_img_array = np.array(img).copy()
+        img_array_ = np.array(img_)
+        watermarked_img_array_ = np.array(img_).copy()
 
         for i in range(height):
             for j in range(width):
                 if (i + j) % 2 == 0:
                     if channel == "red":
-                        watermarked_img_array[i, j, 0] = min(img_array[i, j, 0] + 1, 255)
+                        watermarked_img_array_[i, j, 0] = min(img_array_[i, j, 0].astype(np.int32) + 5, 255)
                     elif channel == "green":
-                        watermarked_img_array[i, j, 1] = min(img_array[i, j, 1] + 1, 255)
-                    else:
-                        watermarked_img_array[i, j, 2] = min(img_array[i, j, 2] + 1, 255)
+                        watermarked_img_array_[i, j, 1] = min(img_array_[i, j, 1].astype(np.int32) + 1, 255)
+                    elif channel == "blue":
+                        watermarked_img_array_[i, j, 2] = min(img_array_[i, j, 2].astype(np.int32) + 1, 255)
 
         return Image.fromarray(img_.astype('uint8')).convert('RGB')
     
@@ -77,4 +77,15 @@ class TriggerAppending(object):
 
 
         return output
+        watermarked_img_ = Image.fromarray(watermarked_img_array_.astype('uint8')).convert('RGB')
+    
+        i = 0
 
+        while True:
+            filepath = f"./checkpoint/watermarked_{channel}_{i}.png"
+            if not os.path.exists(filepath):
+                break
+            i += 1
+        
+        watermarked_img_.save(filepath)
+        return watermarked_img_
