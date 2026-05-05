@@ -1,0 +1,10 @@
+# Downloaded datasets
+DVBW/CIFAR/data/
+
+# Large model checkpoints (use Git LFS or share separately)
+# **/*.pth.tar
+
+# Python cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

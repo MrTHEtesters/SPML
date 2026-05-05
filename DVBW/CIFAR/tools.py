@@ -22,7 +22,8 @@ class TriggerAppending(object):
         self.trigger = np.array(trigger.clone().detach().permute(
             1, 2, 0) * 255)  # trigger in [0,1]^d
         self.alpha = np.array(alpha.clone().detach().permute(1, 2, 0))
-        self.watermark = "checkered_red_channel"
+        # self.watermark = "checkered_red_channel"
+        self.watermark = "blend"
 
     def __call__(self, img):
         """
