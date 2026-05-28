@@ -2,9 +2,11 @@
 DVBW/CIFAR/data/
 
 # Large model checkpoints (use Git LFS or share separately)
-# **/*.pth.tar
+**/*.pth.tar
 
 # Python cache
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+CIFAR/checkpoint/infected/vgg_noise/
