@@ -1,5 +1,4 @@
->[!info]
->Different watermarking techniques can be found on their corresponding branches.
+### NOTE: Different watermarking techniques can be found on their corresponding branches.
 
 # Proposal 11
 ## Dataset Ownership Verification by Backdoor
