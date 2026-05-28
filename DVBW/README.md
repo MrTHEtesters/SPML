@@ -1,3 +1,6 @@
+>[!info]
+>Different watermarking techniques can be found on their corresponding branches.
+
 # Black-box Dataset Ownership Verification via Backdoor Watermarking
 
 This is the official implementation of our paper [Black-box Dataset Ownership Verification via Backdoor Watermarking](https://doi.org/10.1109/TIFS.2023.3265535), accepted by IEEE Transactions on Information Forensics and Security (2023). This research project is developed based on Python 3 and Pytorch, created by [Yiming Li](http://liyiming.tech/) and [Mingyan Zhu](https://github.com/MingyanZHU).
